@@ -72,15 +72,22 @@ the same project. The two do not collide:
 
 ### First time
 
-```powershell
-firebase login             # opens a browser, once
-npm run site:create        # creates the eleuthera-qaqc site, once
-npm run publish            # uploads the register to Firestore
-npm run deploy             # builds and ships the site
-```
+1. Open a terminal in this folder and sign in — type this line by itself:
 
-`npm run deploy` prints the Hosting URL when it finishes. That is the link to
-share.
+   ```powershell
+   firebase login
+   ```
+
+   A browser opens; pick the Google account that owns the Firebase project.
+
+2. **Double-click `PUBLISH.cmd`** in the AFRY_APP folder. It creates the hosting
+   site, uploads the register to Firestore, builds, deploys, and prints the link.
+
+> **Why not `npm run setup`?** On this machine npm cannot spawn `powershell.exe`:
+> the child process dies with `ACCESS_DENIED` (0xC0000022) and prints nothing, so
+> the command appears to do nothing at all. Launched from `PUBLISH.cmd` the same
+> script runs normally. `npm run publish` and `npm run deploy` are unaffected —
+> they invoke node and the firebase CLI directly.
 
 If `site:create` reports the name is taken, pick another (`eleuthera-oe`,
 `afry-eleuthera`) and update it in **both** `.firebaserc` and

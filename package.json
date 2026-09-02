@@ -14,7 +14,8 @@
     "fix:native": "node scripts/fix-native-bindings.mjs",
     "build:static": "node -e \"process.env.STATIC_EXPORT='1';require('child_process').execSync('next build',{stdio:'inherit',env:process.env})\"",
     "deploy": "npm run build:static && firebase deploy --only hosting:eleuthera",
-    "site:create": "firebase hosting:sites:create eleuthera-qaqc"
+    "site:create": "firebase hosting:sites:create eleuthera-qaqc",
+    "setup": "node -e \"console.log('\n  Run PUBLISH.cmd instead - double-click it in the AFRY_APP folder.\n  npm cannot launch powershell on this machine; the child is denied\n  and prints nothing, which looks like the command did nothing.\n')\""
   },
   "dependencies": {
     "firebase": "^12.18.0",
