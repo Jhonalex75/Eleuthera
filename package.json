@@ -13,7 +13,8 @@
     "publish": "npm run rules:open && npm run seed && npm run rules:lock",
     "fix:native": "node scripts/fix-native-bindings.mjs",
     "build:static": "node -e \"process.env.STATIC_EXPORT='1';require('child_process').execSync('next build',{stdio:'inherit',env:process.env})\"",
-    "deploy": "npm run build:static && firebase deploy --only hosting"
+    "deploy": "npm run build:static && firebase deploy --only hosting:eleuthera",
+    "site:create": "firebase hosting:sites:create eleuthera-qaqc"
   },
   "dependencies": {
     "firebase": "^12.18.0",

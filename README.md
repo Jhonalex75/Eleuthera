@@ -59,6 +59,47 @@ numbers, so the same code can drive the weekly Word report or a Cloud Function.
 been seeded, the page serves the bundled register and says so in the header. It
 never renders empty in front of a client.
 
+## Deploying — the viewing link
+
+The Firebase project `studio-6587601373-5651d` already hosts another site on its
+default domain, so this dashboard is published to a **second hosting site** in
+the same project. The two do not collide:
+
+| Site | URL | Contents |
+|---|---|---|
+| default | `studio-6587601373-5651d.web.app` | CyberEngineer Nexus — untouched |
+| `eleuthera-qaqc` | `https://eleuthera-qaqc.web.app` | this dashboard |
+
+### First time
+
+```powershell
+firebase login             # opens a browser, once
+npm run site:create        # creates the eleuthera-qaqc site, once
+npm run publish            # uploads the register to Firestore
+npm run deploy             # builds and ships the site
+```
+
+`npm run deploy` prints the Hosting URL when it finishes. That is the link to
+share.
+
+If `site:create` reports the name is taken, pick another (`eleuthera-oe`,
+`afry-eleuthera`) and update it in **both** `.firebaserc` and
+`package.json`'s `site:create` script.
+
+### Why static Hosting and not App Hosting
+
+App Hosting requires the Blaze pay-as-you-go plan. Plain Hosting runs on the
+free Spark plan and serves this dashboard just as well: the page is a client
+component that reads Firestore in the browser, so there is no server rendering
+to lose. `apphosting.yaml` is kept in the repo, so switching later is a
+one-command change with no code edits.
+
+### Updating afterwards
+
+- **Data changed** → `npm run publish`. Open screens update themselves through
+  `onSnapshot`; no redeploy needed, because the site reads Firestore live.
+- **Code changed** → `npm run deploy`.
+
 ## Publishing the data (public read)
 
 The register lives at `sites/eleuthera-solar` in project

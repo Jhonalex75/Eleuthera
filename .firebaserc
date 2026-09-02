@@ -1,5 +1,12 @@
 {
   "projects": {
     "default": "studio-6587601373-5651d"
+  },
+  "targets": {
+    "studio-6587601373-5651d": {
+      "hosting": {
+        "eleuthera": ["eleuthera-qaqc"]
+      }
+    }
   }
 }
