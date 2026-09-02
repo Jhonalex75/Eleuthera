@@ -10,12 +10,19 @@
       "cleanUrls": true,
       "headers": [
         {
-          "source": "**/*.@(js|css|woff2)",
+          "comment": "Default: revalidate every time. The page itself is served at / (not /index.html) because cleanUrls is on, so a rule written against /index.html never matches and the page silently keeps Firebase's 1-hour default - which is how a deploy can appear not to have happened.",
+          "source": "**",
+          "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+        },
+        {
+          "comment": "Next emits content-hashed filenames here, so these can never go stale.",
+          "source": "/_next/static/**",
           "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
         },
         {
-          "source": "/index.html",
-          "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+          "comment": "Acceptance photographs change rarely and are large; a day of caching with revalidation after.",
+          "source": "/photos/**",
+          "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, must-revalidate" }]
         }
       ]
     }
