@@ -11,7 +11,9 @@
     "rules:open": "firebase deploy --only firestore:rules --config firebase.seed.json",
     "rules:lock": "firebase deploy --only firestore:rules --config firebase.json",
     "publish": "npm run rules:open && npm run seed && npm run rules:lock",
-    "fix:native": "node scripts/fix-native-bindings.mjs"
+    "fix:native": "node scripts/fix-native-bindings.mjs",
+    "build:static": "node -e \"process.env.STATIC_EXPORT='1';require('child_process').execSync('next build',{stdio:'inherit',env:process.env})\"",
+    "deploy": "npm run build:static && firebase deploy --only hosting"
   },
   "dependencies": {
     "firebase": "^12.18.0",
