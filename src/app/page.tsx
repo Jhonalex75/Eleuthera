@@ -11,6 +11,7 @@ import {
   StageFunnel,
   StatBand,
 } from "@/components/Panels";
+import { PhotoRecords } from "@/components/PhotoRecord";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useSiteData } from "@/lib/useSiteData";
 import { baselineAt, dataDate, fmtDate, num, pct, snapshot, structureRate } from "@/lib/progress";
@@ -225,6 +226,20 @@ export default function Home() {
           <div className="card" style={{ marginTop: 16 }}>
             <InverterChart data={data} />
           </div>
+        </section>
+
+        {/* ---------------- photographic traceability ---------------- */}
+        <section>
+          <p className="eyebrow">Photographic traceability</p>
+          <h2>Every photograph binds to a table record</h2>
+          <p className="note">
+            The geotag marker burned into each frame is the table tag. It resolves to a table
+            number, a row, an inverter, a GPS fix and the diagonal difference measured on that
+            table &mdash; and the photograph date matches that table&rsquo;s alignment-and-torque
+            acceptance date in the register. This is what makes the Stage&nbsp;3 record auditable
+            rather than merely asserted.
+          </p>
+          <PhotoRecords data={data} />
         </section>
 
         <footer>
