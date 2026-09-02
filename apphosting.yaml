@@ -1,0 +1,39 @@
+# Firebase App Hosting — Eleuthera Solar Field QA/QC
+#
+# App Hosting builds from a GitHub repository: connect this repo once with
+#   firebase apphosting:backends:create --project studio-6587601373-5651d
+# and every push to `main` then triggers a rollout.
+#
+# The dashboard is a static page that reads Firestore from the browser, so it
+# needs no server work and no secrets. Scaling to zero is deliberate: the page
+# is consulted a few times a day, not continuously.
+
+runConfig:
+  minInstances: 0
+  maxInstances: 2
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 512
+
+env:
+  # The Firebase web config is public by design — it identifies the project, it
+  # does not authorise anything. Access is governed entirely by firestore.rules,
+  # which allow reads of /sites/{id} and no writes at all.
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: AIzaSyBRYu4WbP9vsSyrZap6tDtkWAijxDZ7CFE
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: studio-6587601373-5651d.firebaseapp.com
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: studio-6587601373-5651d
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: studio-6587601373-5651d.firebasestorage.app
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "1071226842307"
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:1071226842307:web:dc7cd56b52d6a8273e0676"
+    availability: [BUILD, RUNTIME]

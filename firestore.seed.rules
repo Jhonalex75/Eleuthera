@@ -1,0 +1,23 @@
+rules_version = '2';
+
+// Eleuthera solar-field QA/QC — SEEDING rules. TEMPORARY.
+//
+// This opens /sites/{id} to anonymous writes so `npm run seed` can upload the
+// register with the web SDK. The project's API key ships in the browser bundle,
+// so while these rules are live ANYONE could overwrite the register.
+//
+// Deploy, seed, and lock again immediately:
+//     npm run rules:open
+//     npm run seed
+//     npm run rules:lock        <-- do not skip this
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /sites/{siteId} {
+      allow read: if true;
+      allow write: if true;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

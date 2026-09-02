@@ -1,0 +1,23 @@
+rules_version = '2';
+
+// Eleuthera solar-field QA/QC — LOCKED rules (the normal state).
+//
+// The register is world-readable: anyone with the URL sees project progress.
+// Nothing can be written from a browser. The register is updated only by
+// `npm run seed`, which runs against the temporarily-open rules in
+// firestore.seed.rules, or by the Admin SDK, which bypasses rules entirely.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // The single site document holding the 572 string-table records.
+    match /sites/{siteId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Everything else stays closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
